@@ -1,0 +1,24 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>administrator</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/admin/add}">
+    <label for="user">select user:</label>
+    <select th:object="${user}" th:field="*{id}" id="user">
+        <option th:each="user : ${users}" th:value="${user.getId()}"
+                th:text="${user.getFirstName()}"></option>
+    </select>
+<!-- не работающие-->
+    <input type="submit" name="makeAdmin" value="Make admin" />
+    <input type="submit" name="makeClient" value="Make Client" />
+    <input type="submit" name="makeGuest" value="Make Guest" />
+</form>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        body {
+            background-image: url('/wifi.jpg');
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<div th:each="tariffPlan : ${tariffPlans}">
+    <a th:href="@{/tariffPlan/{id}(id=${tariffPlan.getId()})}"
+       th:text="${tariffPlan.getPlanName() + ', ' + tariffPlan.getPrice()}">tariff</a>
+</div>
+</body>
+</html>
