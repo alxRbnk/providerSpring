@@ -5,15 +5,67 @@
     <title>Index</title>
     <style>
         body {
-            background-image: url('/wifi.jpg');
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg'); /* Используйте абсолютный путь к изображению */
             background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-<div th:each="tariffPlan : ${tariffPlans}">
-    <a th:href="@{/tariffPlan/{id}(id=${tariffPlan.getId()})}"
-       th:text="${tariffPlan.getPlanName() + ', ' + tariffPlan.getPrice()}">tariff</a>
-</div>
+
+<h1>RBNK provider</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Plan Name</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tariffPlan : ${tariffPlans}">
+        <td th:text="${tariffPlan.getPlanName()}"></td>
+        <td th:text="${tariffPlan.getPrice()}"></td>
+        <td><a th:href="@{|/tariffPlan/${tariffPlan.getId()}|}" th:text="${'Details'}"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+<form th:action="@{/login}" method="POST">
+    <button> log in</button>
+</form>
+
+<form th:action="@{/logout}" method="POST">
+    <button> log out</button>
+</form>
+
 </body>
 </html>

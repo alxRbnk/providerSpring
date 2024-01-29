@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +19,7 @@ public class User {
 
 //    @NotEmpty(message = "invalid data, empty")
 //    @Size(min = 2, max = 30, message = "invalid data, name > 2 & name < 30")
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
     @Column(name = "password")
@@ -37,8 +38,8 @@ public class User {
 //    @NotEmpty(message = "Email should not be empty")
     private String lastName;
 
-    @Column(name = "is_blocked")
-    private boolean isBlocked;
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @Column(name = "balance")
     private BigDecimal balance;
@@ -47,22 +48,26 @@ public class User {
     @Column(name = "role")
     private Role role;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Operation> operations;
+
     public User() {
     }
 
     public User(int id, String login, String password,
                 String email, String firstName, String lastName,
-                boolean isBlocked, BigDecimal balance, Role role) {
+                boolean enabled, BigDecimal balance, Role role,
+                List<Operation> operations) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isBlocked = isBlocked;
+        this.enabled = enabled;
         this.balance = balance;
         this.role = role;
-
+        this.operations = operations;
     }
 
     public int getId() {
@@ -113,12 +118,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public boolean getIsBlocked() {
-        return isBlocked;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setIsBlocked(boolean isBlocked) {
-        this.isBlocked = isBlocked;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public BigDecimal getBalance() {
@@ -137,6 +142,14 @@ public class User {
         this.role = role;
     }
 
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -146,8 +159,10 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", isBlocked=" + isBlocked +
+                ", enabled=" + enabled +
                 ", balance=" + balance +
+                ", role=" + role +
+                ", operations=" + operations +
                 '}';
     }
 }

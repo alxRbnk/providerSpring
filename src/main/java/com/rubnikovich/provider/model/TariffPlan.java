@@ -3,6 +3,7 @@ package com.rubnikovich.provider.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name= "tariff_plans")
@@ -28,18 +29,23 @@ public class TariffPlan {
     @Column(name = "is_archived")
     private boolean isArchived;
 
+    @OneToMany(mappedBy = "plan")
+    private List<Operation> operations;
+
     public TariffPlan(){
     }
 
-    public TariffPlan(int id, String planName, BigDecimal price,
-                      BigDecimal trafficLimit, BigDecimal discount,
-                      boolean isArchived) {
+    public TariffPlan(int id, String planName,
+                      BigDecimal price, BigDecimal trafficLimit,
+                      BigDecimal discount, boolean isArchived,
+                      List<Operation> operations) {
         this.id = id;
         this.planName = planName;
         this.price = price;
         this.trafficLimit = trafficLimit;
         this.discount = discount;
         this.isArchived = isArchived;
+        this.operations = operations;
     }
 
     public int getId() {
@@ -88,5 +94,13 @@ public class TariffPlan {
 
     public void setArchived(boolean archived) {
         isArchived = archived;
+    }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
     }
 }

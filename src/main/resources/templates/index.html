@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg'); /* Используйте абсолютный путь к изображению */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div style="position: absolute; top: 10px; right: 10px;">
+
+    <div th:if="${not #authorization.expression('isAuthenticated()')}">
+        <form th:action="@{/login}" method="POST" style="display: inline-block; margin-right: 10px;">
+            <button>log in</button>
+        </form>
+        <form th:action="@{/user/new}" method="POST" style="display: inline-block; margin-right: 10px;">
+            <button class="button-link">Sign Up</button>
+        </form>
+        <a href="/layout/login" class="button">log in</a>
+        <a href="/user/new" class="button-link">sign up</a>
+    </div>
+
+    <div th:if="${#authorization.expression('isAuthenticated')}">
+        <form th:action="@{/logout}" method="POST" style="display: inline-block;">
+            <button>log out</button>
+        </form>
+    </div>
+
+</div>
+
+<h1>RBNK provider</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Plan Name</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tariffPlan : ${tariffPlans}">
+        <td th:text="${tariffPlan.getPlanName()}"></td>
+        <td th:text="${tariffPlan.getPrice()}"></td>
+        <td><a th:href="@{|/tariffPlan/${tariffPlan.getId()}|}" th:text="${'activate tariff'}"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

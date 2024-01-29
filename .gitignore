@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/password/
+/src/main/resources/password.properties
+/src/main/resources/pass.properties
+/src/main/java/com/rubnikovich/provider/util/Password.java
+/src/main/java/com/rubnikovich/provider/util/CustomPassword.java
+/src/main/java/com/rubnikovich/provider/oldconf/
+

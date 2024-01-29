@@ -1,6 +1,7 @@
 package com.rubnikovich.provider.controller;
 
 
+import com.rubnikovich.provider.mail.EmailSender;
 import com.rubnikovich.provider.model.User;
 import jakarta.validation.Valid;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     private final UsersService userService;
-
 
     @Autowired
     public UsersController(UsersService peopleService) {

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+
+</head>
+<body>
+<h1>RBNK provider</h1>
+
+<p th:text="${operation.getPlan().getPlanName() + ', ' + operation.getOwner().getFirstName()}">VALUE</p>
+<p th:text="${'operation: ' + operation.getPlan().getPlanName()}">VALUE</p>
+
+<br/>
+<br/>
+</body>
+</html>

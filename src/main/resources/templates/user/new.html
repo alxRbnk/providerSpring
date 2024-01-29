@@ -12,6 +12,11 @@
     <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
     <br/>
     <br/>
+    <label for="password">Enter password: </label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    <br/>
+    <br/>
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
@@ -34,7 +39,7 @@
          th:errors="*{date}">Date of birth Error</div>
          -->
     <br/>
-    <input type="submit" value="Create!"/>
+    <input type="submit" value="create"/>
 </form>
 
 </body>

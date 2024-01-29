@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RBNK</title>
+</head>
+<body>
+
+<div th:each="operation : ${userOperations}">
+    <a th:href="@{/operation/{id}(id=${operation.getId()})}"
+       th:text="${operation.getId() + ' - ' + operation.getOwner().getFirstName()
+       + ' ' + operation.getOwner().getLastName()+ ' start - ' + operation.getStartTime()
+       + ' end - ' + operation.getEndTime() + ' tariff - ' + operation.getPlan().getPlanName() }">operation</a>
+</div>
+
+
+</body>
+</html>

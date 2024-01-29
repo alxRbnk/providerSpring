@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Show</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<p th:text="${tariffPlan.getPlanName() + ', ' + tariffPlan.getPrice()}">VALUE</p>
-<p th:text="${'TrafficLimit: ' + tariffPlan.getTrafficLimit()}">VALUE</p>
+<h1>RBNK provider</h1>
+
+<p th:text="${'Plan Name: ' + tariffPlan.getPlanName()}">VALUE</p>
+<p th:text="${'Price: ' + tariffPlan.getPrice() + ' $'}">VALUE</p>
+<p th:text="${'Traffic Limit: ' + tariffPlan.getTrafficLimit() + ' Gbyte'}">VALUE</p>
+<p>Speed: 500 Mbit</p>
 
 <br/>
 <br/>
-
 </body>
 </html>

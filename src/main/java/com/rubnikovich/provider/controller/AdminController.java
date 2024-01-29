@@ -25,22 +25,25 @@ public class AdminController {
     @GetMapping
     public String adminPage(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("users", usersService.findAll());
-        return "admin/adminPage";
+        return "admin/userList";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/setAdmin")
     public String makeAdmin(@ModelAttribute("user") User user) {
         usersService.updateRole(user.getId(), Role.ADMIN);
-        return "redirect:/user";
+        return "redirect:/admin";
     }
+
+    @PostMapping("/setClient")
+    public String makeClient(@ModelAttribute("user") User user) {
+        usersService.updateRole(user.getId(), Role.CLIENT);
+        return "redirect:/admin";
+    }
+
 //    @PostMapping("/add")
 //    public String makeClient(@ModelAttribute("user") User user) {
 //        usersService.updateRole(user.getId(), Role.CLIENT);
 //        return "redirect:/user";
 //    }
-//    @PostMapping("/add")
-//    public String makeGuest(@ModelAttribute("user") User user) {
-//        usersService.updateRole(user.getId(), Role.GUEST);
-//        return "redirect:/user";
-//    }
+
 }

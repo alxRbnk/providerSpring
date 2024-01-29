@@ -15,12 +15,6 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
-
-    @Column(name = "tariff_plan_id")
-    private int tariffPlanId;
-
     @Column(name = "start_time")
     private Date startTime;
 
@@ -30,15 +24,22 @@ public class Operation {
     @Column(name = "final_price")
     private BigDecimal finalPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "user_operation_id", referencedColumnName = "user_id")
+    private User owner;
+
+    @ManyToOne
+    @JoinColumn(name = "tariff_plan_id", referencedColumnName = "plan_id")
+    private TariffPlan plan;
+
     public Operation(){
     }
 
-    public Operation(int id, int userId,
-                     int tariffPlanId, Date startTime,
-                     Date endTime, BigDecimal finalPrice) {
+    public Operation(int id, User owner, TariffPlan plan,
+                      Date startTime, Date endTime, BigDecimal finalPrice) {
         this.id = id;
-        this.userId = userId;
-        this.tariffPlanId = tariffPlanId;
+        this.owner = owner;
+        this.plan = plan;
         this.startTime = startTime;
         this.endTime = endTime;
         this.finalPrice = finalPrice;
@@ -52,20 +53,12 @@ public class Operation {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getTariffPlanId() {
-        return tariffPlanId;
-    }
-
-    public void setTariffPlanId(int tariffPlanId) {
-        this.tariffPlanId = tariffPlanId;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Date getStartTime() {
@@ -90,5 +83,13 @@ public class Operation {
 
     public void setFinalPrice(BigDecimal finalPrice) {
         this.finalPrice = finalPrice;
+    }
+
+    public TariffPlan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(TariffPlan plan) {
+        this.plan = plan;
     }
 }

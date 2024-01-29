@@ -10,6 +10,10 @@
 <p th:text="${'id: ' + user.getId()}">VALUE</p>
 <p th:text="${'role: ' + user.getRole()}">VALUE</p>
 <a th:href="@{/user/{id}/edit(id=${user.getId()})}">Edit</a>
+<p th:text="${'current plan: ' + (user.getOperations().isEmpty() ? 'no current plan' : user.getOperations().getLast().getPlan().getPlanName())}">VALUE</p>
+<p th:text="${'active from: ' + (user.getOperations().isEmpty() ? 'no current plan' : user.getOperations().getLast().getEndTime())}">VALUE</p>
+<p th:text="${'active until: ' + (user.getOperations().isEmpty() ? 'no current plan' :user.getOperations().getLast().getStartTime())}">VALUE</p>
+
 <br/>
 <br/>
 
