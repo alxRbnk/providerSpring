@@ -2,18 +2,100 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Security</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        div {
+            margin-top: 10px;
+        }
+
+        label {
+            color: #000000;
+        }
+
+        input {
+            margin-left: 10px;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        p[style="color: red;"] {
+            color: red;
+        }
+
+        p[style="color: green;"] {
+            color: green;
+        }
+
+        a.button-link {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
+
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
+
 <div th:if="${param.error == 'true'}">
     <p style="color: red;">Invalid login or password.</p>
 </div>
+
 <div th:if="${param.logout}">
     <p style="color: green;">You have been logged out successfully.</p>
 </div>
+
 <form th:action="@{/login}" method="post">
     <div><label>Login: <input type="text" name="username" /></label></div>
     <div><label>Password: <input type="password" name="password" /></label></div>
-    <div><input type="submit" value="Sign In" /></div>
+    <div><input type="submit" value="log in" /></div>
 </form>
+
 </body>
 </html>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Security</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:href="@{/}" class="button-link">-->
+<!--    <h1>RBNK provider</h1>-->
+<!--</a>-->
+<!--<div th:if="${param.error == 'true'}">-->
+<!--    <p style="color: red;">Invalid login or password.</p>-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--    <p style="color: green;">You have been logged out successfully.</p>-->
+<!--</div>-->
+<!--<form th:action="@{/login}" method="post">-->
+<!--    <div><label>Login: <input type="text" name="username" /></label></div>-->
+<!--    <div><label>Password: <input type="password" name="password" /></label></div>-->
+<!--    <div><input type="submit" value="log in" /></div>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

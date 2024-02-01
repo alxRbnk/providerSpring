@@ -32,11 +32,11 @@ public class Operation {
     @JoinColumn(name = "tariff_plan_id", referencedColumnName = "plan_id")
     private TariffPlan plan;
 
-    public Operation(){
+    public Operation() {
     }
 
     public Operation(int id, User owner, TariffPlan plan,
-                      Date startTime, Date endTime, BigDecimal finalPrice) {
+                     Date startTime, Date endTime, BigDecimal finalPrice) {
         this.id = id;
         this.owner = owner;
         this.plan = plan;

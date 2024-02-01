@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>topUp</title>
+</head>
+
+<body>
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
+<form action="/user/topUp/{id}" method="post">
+    <label for="amount">Сумма:</label>
+    <input type="text" id="amount" name="amount" required>
+    <button type="submit">Пополнить баланс</button>
+</form>
+
+
+</body>
+
+</html>

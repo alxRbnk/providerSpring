@@ -1,10 +1,13 @@
 package com.rubnikovich.provider.service;
 
+import com.rubnikovich.provider.exception.CustomException;
 import com.rubnikovich.provider.mail.EmailSender;
 import com.rubnikovich.provider.model.Role;
 import com.rubnikovich.provider.model.User;
 import com.rubnikovich.provider.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,11 @@ public class UsersService {
         return foundUser.orElse(null); //some message
     }
 
+    public User findByLogin(String login){
+        Optional<User> foundUser = usersRepository.findByLogin(login);
+        return foundUser.orElse(null); //some message
+    }
+
     @Transactional
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -51,7 +59,23 @@ public class UsersService {
     @Transactional
     public void update(int id, User updatedUser) {
         updatedUser.setId(id);
+        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        updatedUser.setRole(Role.CLIENT);
+        updatedUser.setEnabled(true);
         usersRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void addBalance(int userId, BigDecimal amount) throws CustomException {
+        User user = usersRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("user not found"));
+        BigDecimal currentBalance = user.getBalance();
+        BigDecimal newBalance = currentBalance.add(amount);
+        if (amount.compareTo(BigDecimal.ZERO) < 0){
+            throw new CustomException("shortage of money");
+        }
+        user.setBalance(newBalance);
+        usersRepository.save(user);
     }
 
     @Transactional
@@ -66,6 +90,14 @@ public class UsersService {
             user.setRole(role);
             usersRepository.save(user);
         });
+    }
+
+    @Transactional
+    public void setBlock(int userId, Boolean enabled) {
+        User user = usersRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("user not found"));
+        user.setEnabled(enabled);
+        usersRepository.save(user);
     }
 
 }

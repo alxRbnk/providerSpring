@@ -7,7 +7,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
-            background-image: url('/images/wifi.jpg'); /* Используйте абсолютный путь к изображению */
+            background-image: url('/images/wifi.jpg');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -40,28 +40,43 @@
     </style>
 </head>
 <body>
+
+
 <div style="position: absolute; top: 10px; right: 10px;">
 
-    <div th:if="${not #authorization.expression('isAuthenticated()')}">
-        <form th:action="@{/login}" method="POST" style="display: inline-block; margin-right: 10px;">
+    <div th:if="${not #authorization.expression('isAuthenticated')}" style="display: inline-block; margin-right: 10px;">
+        <form th:action="@{/login}" method="POST" style="display: inline-block;">
             <button>log in</button>
         </form>
-        <form th:action="@{/user/new}" method="POST" style="display: inline-block; margin-right: 10px;">
-            <button class="button-link">Sign Up</button>
-        </form>
-        <a href="/layout/login" class="button">log in</a>
-        <a href="/user/new" class="button-link">sign up</a>
+        <a href="/user/new" class="button-link" style="display: inline-block; margin-right: 10px;">
+            <button type="button" class="your-button-styles">sign up</button>
+        </a>
     </div>
 
-    <div th:if="${#authorization.expression('isAuthenticated')}">
+    <div th:if="${#authorization.expression('isAuthenticated')}" style="display: inline-block; margin-right: 10px;">
         <form th:action="@{/logout}" method="POST" style="display: inline-block;">
             <button>log out</button>
         </form>
+        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="display: inline-block; margin-right: 10px;">
+            <a href="/admin" class="button-link" style="display: inline-block;">
+                <button type="button" class="your-button-styles">admin page</button>
+            </a>
+            <a href="/operation" class="button-link" style="display: inline-block;">
+                <button type="button" class="your-button-styles">operations</button>
+            </a>
+        </div>
+        <div th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'')')}" style="display: inline-block; margin-right: 10px;">
+            <a href="/user/userPage" class="button-link" style="display: inline-block;">
+                <button type="button" class="your-button-styles">user page</button>
+            </a>
+        </div>
     </div>
 
 </div>
 
-<h1>RBNK provider</h1>
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
 <table>
     <thead>
     <tr>
@@ -73,12 +88,11 @@
     <tbody>
     <tr th:each="tariffPlan : ${tariffPlans}">
         <td th:text="${tariffPlan.getPlanName()}"></td>
-        <td th:text="${tariffPlan.getPrice()}"></td>
+        <td th:text="${tariffPlan.getPrice() + ' $'}"></td>
         <td><a th:href="@{|/tariffPlan/${tariffPlan.getId()}|}" th:text="${'activate tariff'}"></a></td>
     </tr>
     </tbody>
 </table>
-
 
 
 </body>

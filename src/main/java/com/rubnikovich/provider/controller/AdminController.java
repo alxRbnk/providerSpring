@@ -4,12 +4,11 @@ import com.rubnikovich.provider.model.Role;
 import com.rubnikovich.provider.model.User;
 import com.rubnikovich.provider.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,22 +27,31 @@ public class AdminController {
         return "admin/userList";
     }
 
-    @PostMapping("/setAdmin")
-    public String makeAdmin(@ModelAttribute("user") User user) {
-        usersService.updateRole(user.getId(), Role.ADMIN);
+    @PostMapping("/setRole")
+    public String setRole(@ModelAttribute("user") User user, @RequestParam("role") String role) {
+        Role newRole = Role.valueOf(role);
+        usersService.updateRole(user.getId(), newRole);
         return "redirect:/admin";
     }
 
-    @PostMapping("/setClient")
-    public String makeClient(@ModelAttribute("user") User user) {
-        usersService.updateRole(user.getId(), Role.CLIENT);
+    @PostMapping("/setBlock")
+    public String setBlock(@ModelAttribute("user") User user, @RequestParam("enabled") Boolean enabled) {
+        usersService.setBlock(user.getId(), enabled);
         return "redirect:/admin";
     }
 
-//    @PostMapping("/add")
-//    public String makeClient(@ModelAttribute("user") User user) {
-//        usersService.updateRole(user.getId(), Role.CLIENT);
-//        return "redirect:/user";
-//    }
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id, Authentication authentication) {
+        usersService.delete(id);
+        if (authentication != null && !isAdmin(authentication)) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+        }
+        return "redirect:/admin";
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+    }
 
 }

@@ -7,6 +7,9 @@
     <title>Error Page</title>
 </head>
 <body>
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
 <h1 th:text="${error}">Error</h1>
 <p th:text="${message}">An unexpected error occurred.</p>
 </body>

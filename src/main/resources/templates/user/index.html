@@ -5,10 +5,12 @@
     <title>Index</title>
 </head>
 <body>
-
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
 <div th:each="user : ${users}">
     <a th:href="@{/user/{id}(id=${user.getId()})}"
-       th:text="${user.getFirstName() + ', ' + user.getLastName()}">user</a>
+       th:text="${user.getFirstName() + ' ' + user.getLastName()}">user</a>
 </div>
 
 <br/>

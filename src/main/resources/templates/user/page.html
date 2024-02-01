@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
+<p th:text="${user.firstName + ' ' + user.lastName}"></p>
+<p th:text="${'email: ' + user.email}"></p>
+<p th:text="${'balance: ' + user.balance + ' $'}"></p>
+<p th:text="${'role: ' + user.role}"></p>
+<p th:text="${'current plan: ' + (user.operations.isEmpty() ? 'no current plan' : user.operations.last.plan.planName)}"></p>
+<!--<p th:text="${'active until: ' + (user.operations.isEmpty() ? 'no current plan' : user.operations.last.endTime)}"></p>-->
+<p th:text="${'active from: ' + (user.operations.isEmpty() ? 'no current plan' : user.operations.last.startTime)}"></p>
+
+
+<form th:action="@{/user/topUp/{id}(id=${user.id})}" method="post">
+    <label for="amount">Amount:</label>
+    <input type="text" id="amount" name="amount" required>
+    <button type="submit">top up</button>
+</form>
+<br/>
+<br/>
+<a th:href="@{/user/{id}/edit(id=${user.getId()})}" class="button-link" style="display: inline-block;">
+    <button type="button" class="your-button-styles">Edit</button>
+</a>
+<br/>
+<br/>
+<form th:method="DELETE" th:action="@{/user/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+
+
+
+
+
+
+</body>
+
+</html>

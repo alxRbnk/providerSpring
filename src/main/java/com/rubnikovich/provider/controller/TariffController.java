@@ -26,7 +26,7 @@ public class TariffController {
     public String indexPlan(Model model) {
         List<TariffPlan> tariff = tariffService.findAll();
         model.addAttribute("tariffPlans", tariff);
-        return "tariff/indexTariffPlan";  //отправляем на view
+        return "tariff/indexTariffPlan";  //view
     }
 
     @GetMapping("/{id}")
@@ -35,4 +35,5 @@ public class TariffController {
         model.addAttribute("tariffPlan", tariffPlan);
         return "tariff/show";
     }
+
 }

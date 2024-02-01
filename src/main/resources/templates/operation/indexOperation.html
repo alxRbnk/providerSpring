@@ -2,17 +2,123 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>RBNK</title>
+    <title>operations</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-
-<div th:each="operation : ${userOperations}">
-    <a th:href="@{/operation/{id}(id=${operation.getId()})}"
-       th:text="${operation.getId() + ' - ' + operation.getOwner().getFirstName()
-       + ' ' + operation.getOwner().getLastName()+ ' start - ' + operation.getStartTime()
-       + ' end - ' + operation.getEndTime() + ' tariff - ' + operation.getPlan().getPlanName() }">operation</a>
-</div>
-
-
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+    <a th:href="@{/operation}" class="button-link">operations</a>
+</a>
+<table>
+    <tr>
+        <th>Operation ID</th>
+        <th>Owner</th>
+        <th>Start Time</th>
+        <th>Tariff</th>
+        <th>Action</th>
+    </tr>
+    <div th:each="operation : ${userOperations}">
+        <tr>
+            <td>
+                <a th:href="@{/operation/{id}(id=${operation.getId()})}" th:text="${operation.getId()}">operation</a>
+            </td>
+            <td th:text="${operation.getOwner().getFirstName() + ' ' + operation.getOwner().getLastName()}"></td>
+            <td th:text="${operation.getStartTime()}"></td>
+            <td th:text="${operation.getPlan().getPlanName()}"></td>
+            <td><a th:href="@{/operation/{id}(id=${operation.getId()})}" th:text="${'Details'}"></a></td>
+        </tr>
+    </div>
+</table>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>RBNK</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            text-align: center;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            background-image: url('/images/wifi.jpg');-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            margin-top: 50px;-->
+<!--        }-->
+
+<!--        table {-->
+<!--            margin: 20px auto;-->
+<!--            border-collapse: collapse;-->
+<!--            width: 80%;-->
+<!--        }-->
+
+<!--        th, td {-->
+<!--            padding: 12px;-->
+<!--            text-align: left;-->
+<!--            border-bottom: 1px solid #ddd;-->
+<!--        }-->
+
+<!--        a {-->
+<!--            display: block;-->
+<!--            font-size: 18px;-->
+<!--            text-decoration: none;-->
+<!--            color: #333;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:href="@{/}" class="button-link">-->
+<!--    <h1>RBNK provider</h1>-->
+<!--</a>-->
+<!--<div th:each="operation : ${userOperations}">-->
+<!--    <a th:href="@{/operation/{id}(id=${operation.getId()})}"-->
+<!--       th:text="${operation.getId() + ' - ' + operation.getOwner().getFirstName()-->
+<!--       + ' ' + operation.getOwner().getLastName()+ ' start - ' + operation.getStartTime()-->
+<!--        + ' tariff - ' + operation.getPlan().getPlanName() }">operation</a>-->
+<!--</div>-->
+
+
+<!--</body>-->
+<!--</html>-->

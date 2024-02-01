@@ -7,25 +7,54 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            background-image: url('/images/wifi.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
         }
 
         h1 {
             margin-top: 50px;
         }
 
-        p {
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: block;
             font-size: 18px;
+            text-decoration: none;
+            color: #333;
             margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-<h1>RBNK provider</h1>
+<a th:href="@{/}" class="button-link">
+    <h1>RBNK provider</h1>
+</a>
 
 <p th:text="${'Plan Name: ' + tariffPlan.getPlanName()}">VALUE</p>
-<p th:text="${'Price: ' + tariffPlan.getPrice() + ' $'}">VALUE</p>
+<p th:text="${'Price Per Month: ' + tariffPlan.getPrice() + ' $'}">VALUE</p>
 <p th:text="${'Traffic Limit: ' + tariffPlan.getTrafficLimit() + ' Gbyte'}">VALUE</p>
-<p>Speed: 500 Mbit</p>
+<p>Speed up to 500 mbps</p>
+
+<div th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'')')}" style="display: inline-block; margin-right: 10px;">
+    <form th:method="POST" th:action="@{/operation/addPlan}">
+        <input type="hidden" name="tariffPlanId" th:value="${tariffPlan.getId()}" />
+        <button type="submit">Activate Plan</button>
+    </form>
+</div>
 
 <br/>
 <br/>
